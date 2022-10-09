@@ -6,7 +6,7 @@
     <title>CRM Dashboard Customers </title>
 </head>
 <body>
-<div class="header">
+<header class="header">
     <div class="header__wrapper">
         <div class="header__container">
             <h1 class="header__title">All Customers</h1>
@@ -23,84 +23,99 @@
             </label>
         </div>
     </div>
-</div>
+</header>
 <section class="section">
     <div class="container">
-            <div class="section__titles">
-                <p class="section__titles__text">Customer Name</p>
-                <p class="section__titles__text">Company</p>
-                <p class="section__titles__text">Phone Number</p>
-                <p class="section__titles__text">Email</p>
-                <p class="section__titles__text">Country</p>
-                <p class="section__titles__text section__titles__status">Status</p>
-                <p class="section__texts__text">Jane Cooper</p>
-                <p class="section__texts__text">Microsoft</p>
-                <p class="section__texts__text">(225) 555-0118</p>
-                <p class="section__texts__text">jane@microsoft.com</p>
-                <p class="section__texts__text">United States</p>
-                <div class="section__status">
-                    <p class="section__status__active">Active</p>
-                </div>
-                <p class="section__texts__text">Floyd Miles</p>
-                <p class="section__texts__text">Yahoo</p>
-                <p class="section__texts__text">(205) 555-0100</p>
-                <p class="section__texts__text">floyd@yahoo.com</p>
-                <p class="section__texts__text">Kiribati</p>
-                <div class="section__status">
-                    <p class="section__status__inactive">Inactive</p>
-                </div>
-                <p class="section__texts__text">Ronald Richards</p>
-                <p class="section__texts__text">Adobe</p>
-                <p class="section__texts__text">(302) 555-0107</p>
-                <p class="section__texts__text">ronald@adobe.com</p>
-                <p class="section__texts__text">Israel</p>
-                <div class="section__status">
-                    <p class="section__status__inactive">Inactive</p>
-                </div>
-                <p class="section__texts__text">Marvin McKinney</p>
-                <p class="section__texts__text">Tesla</p>
-                <p class="section__texts__text">(252) 555-0126</p>
-                <p class="section__texts__text">marvin@tesla.com</p>
-                <p class="section__texts__text">Iran</p>
-                <div class="section__status">
-                    <p class="section__status__active">Active</p>
-                </div>
-                <p class="section__texts__text">Jerome Bell</p>
-                <p class="section__texts__text">Google</p>
-                <p class="section__texts__text">(629) 555-0129</p>
-                <p class="section__texts__text">jerome@google.com</p>
-                <p class="section__texts__text">Réunion</p>
-                <div class="section__status">
-                    <p class="section__status__active">Active</p>
-                </div>
-                <p class="section__texts__text">Kathryn Murphy</p>
-                <p class="section__texts__text">Microsoft</p>
-                <p class="section__texts__text">(406) 555-0120</p>
-                <p class="section__texts__text">kathryn@microsoft.com</p>
-                <p class="section__texts__text">Curaçao</p>
-                <div class="section__status">
-                    <p class="section__status__active">Active</p>
-                </div>
-                <p class="section__texts__text">Jacob Jones</p>
-                <p class="section__texts__text">Yahoo</p>
-                <p class="section__texts__text">(208) 555-0112</p>
-                <p class="section__texts__text">jacob@yahoo.com</p>
-                <p class="section__texts__text">Brazil</p>
-                <div class="section__status">
-                     <p class="section__status__active">Active</p>
-                </div>
-                <p class="section__texts__text">Kristin Watson</p>
-                <p class="section__texts__text">Facebook</p>
-                <p class="section__texts__text">(704) 555-0127</p>
-                <p class="section__texts__text">kristin@facebook.com</p>
-                <p class="section__texts__text">Åland Islands</p>
-                <div class="section__status">
-                    <p class="section__status__inactive">Inactive</p>
-                </div>
+        <div class="section__columns">
+            <div class="section__texts">
+            <p class="section__titles__text">Customer Name</p>
+            <p class="section__texts__text">Jane Cooper</p>
+            <p class="section__texts__text">Floyd Miles</p>
+            <p class="section__texts__text">Ronald Richards</p>
+            <p class="section__texts__text">Marvin McKinney</p>
+            <p class="section__texts__text">Jerome Bell</p>
+            <p class="section__texts__text">Kathryn Murphy</p>
+            <p class="section__texts__text">Jacob Jones</p>
+            <p class="section__texts__text">Kristin Watson</p>
+        </div>
+            <div class="section__texts">
+            <p class="section__titles__text">Company</p>
+            <p class="section__texts__text">Microsoft</p>
+            <p class="section__texts__text">Yahoo</p>
+            <p class="section__texts__text">Adobe</p>
+            <p class="section__texts__text">Tesla</p>
+            <p class="section__texts__text">Google</p>
+            <p class="section__texts__text">Microsoft</p>
+            <p class="section__texts__text">Yahoo</p>
+            <p class="section__texts__text">Facebook</p>
+        </div>
+            <div class="section__texts">
+            <p class="section__titles__text">Phone Number</p>
+            <p class="section__texts__text">(225) 555-0118</p>
+            <p class="section__texts__text">(205) 555-0100</p>
+            <p class="section__texts__text">(302) 555-0107</p>
+            <p class="section__texts__text">(252) 555-0126</p>
+            <p class="section__texts__text">(629) 555-0129</p>
+            <p class="section__texts__text">(406) 555-0120</p>
+            <p class="section__texts__text">(208) 555-0112</p>
+            <p class="section__texts__text">(704) 555-0127</p>
+        </div>
+            <div class="section__texts">
+            <p class="section__titles__text">Email</p>
+            <p class="section__texts__text">jane@microsoft.com</p>
+            <p class="section__texts__text">floyd@yahoo.com</p>
+            <p class="section__texts__text">ronald@adobe.com</p>
+            <p class="section__texts__text">marvin@tesla.com</p>
+            <p class="section__texts__text">jerome@google.com</p>
+            <p class="section__texts__text">kathryn@microsoft.com</p>
+            <p class="section__texts__text">jacob@yahoo.com</p>
+            <p class="section__texts__text">kristin@facebook.com</p>
+
+
+        </div>
+            <div class="section__texts">
+            <p class="section__titles__text">Country</p>
+            <p class="section__texts__text">United States</p>
+            <p class="section__texts__text">Kiribati</p>
+            <p class="section__texts__text">Israel</p>
+            <p class="section__texts__text">Iran</p>
+            <p class="section__texts__text">Réunion</p>
+            <p class="section__texts__text">Curaçao</p>
+            <p class="section__texts__text">Brazil</p>
+            <p class="section__texts__text">Åland Islands</p>
+
+        </div>
+            <div class="section__texts">
+            <p class="section__titles__text section__titles__status">Status</p>
+            <div class="section__status">
+                <p class="section__status__active">Active</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__inactive">Inactive</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__inactive">Inactive</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__active">Active</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__active">Active</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__active">Active</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__active">Active</p>
+            </div>
+            <div class="section__status">
+                <p class="section__status__inactive">Inactive</p>
             </div>
         </div>
+        </div>
+    </div>
 </section>
-<div class="footer">
+<footer class="footer">
     <div class="footer__wrapper">
         <p class="footer__text">Showing data 1 to 8 of  256K entries</p>
         <div class="footer__pageContainer">
@@ -114,6 +129,6 @@
             <p class="footer__pageNum">></p>
         </div>
     </div>
-</div>
+</footer>
 </body>
 </html>
