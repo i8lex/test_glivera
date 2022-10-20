@@ -171,6 +171,25 @@ function renderSection() {
 
         paginationEl.append(ulEl)
 
+
+        const liRight = document.createElement(`li`);
+        liRight.className = `footer__page right`;
+        liRight.innerText = `>`;
+        const liLeft = document.createElement(`li`);
+        liLeft.className = `footer__page left`;
+        liLeft.innerText = `<`;
+
+        ulEl.prepend(liLeft);
+        ulEl.append(liRight);
+
+        // liRight.addEventListener(`click`, () => {
+        //     currentPage = currentPage + 1;
+        //     liEl.classList.add('footer__page__active')
+        //     renderData(arrData, rows, currentPage);
+        // })
+
+
+
         function displayPaginationBtn(page) {
             const liEl = document.createElement("li");
             liEl.classList.add('footer__page')

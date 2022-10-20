@@ -117,25 +117,6 @@
     line-height: 21px;
     letter-spacing: -0.01em;
     color: #B5B7C0;
-    //
-    //&:nth-child(1) {
-    //  flex-basis: 12em;
-    //}
-    //&:nth-child(2) {
-    //  flex-basis: 8.5em;
-    //}
-    //&:nth-child(3) {
-    //  flex-basis: 12em;
-    //}
-    //&:nth-child(4) {
-    //  flex-basis: 15em;
-    //}
-    //&:nth-child(5) {
-    //  flex-basis: 10em;
-    //}
-    //&:nth-child(6) {
-    //  flex-basis: 5em;
-    //}
     &:nth-child(1) {
       flex-basis: 12em;
     }
@@ -149,50 +130,39 @@
       flex-basis: 15em;
     }
     &:nth-child(5) {
-      flex-basis: 10em;
+      flex-basis: 11em;
     }
     &:nth-child(6) {
-      flex-basis: 5em;
+      flex-basis: 6em;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 225px;
+      left: -50px;
+      bottom: 0;
+      border-bottom: 1px solid #EEEEEE;
     }
 
     &__status {
       padding-left: 15px;
     }
-
-    &:after {
-      content: '';
-      position: absolute;
-      //height: 1px;
-      width: 225px;
-      //width: 100%;
-      left: -40px;
-      bottom: 0;
-      border-bottom: 1px solid #EEEEEE;
-    }
-
-
   }
+
   &__texts {
     position: relative;
     display: flex;
     gap: 20px;
     align-items: center;
-    //justify-content: space-between;
     border-bottom: 1px solid #EEEEEE;
-    //&:after {
-    //  content: '';
-    //  position: absolute;
-    //  //height: 1px;
-    //  width: 888px;
-    //  left: 0;
-    //  bottom: 0;
-    //  border-bottom: 1px solid #EEEEEE;
-    //}
+    &:first-child {
+      border: none;
+    };
 
     &__text {
       max-width: 215px;
       flex: 1 1;
-      //flex-basis: content;
       position: relative;
       word-break: break-all;
       overflow: hidden;
@@ -224,7 +194,6 @@
       }
     }
   }
-
 
   &__status {
     display: flex;
@@ -264,8 +233,6 @@
       border-radius: 4px;
     }
   }
-
-
 }
 
 .footer {
@@ -320,10 +287,6 @@
     }
   }
 
-
-
-
-
   &__pageNaN {
     max-width: 30px;
     margin-left: 12px;
@@ -345,14 +308,13 @@
 
   .header {
     max-width: 375px;
-    padding: 15px 0 0 10px;
+    padding: 15px;
 
     &__container {
       padding-bottom: 10px;
     }
 
     &__wrapper {
-      flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
     }
@@ -365,11 +327,19 @@
   .section {
     max-width: 375px;
 
-    &__titles__status {
-      text-align: center;
+    &__titles {
+      display: none;
+      &:first-child,
+      &:last-child,
+      &:nth-child(2) {
+        display: flex;
+      }
+      &__status {
+        text-align: center;
+      }
     }
 
-    &__texts {
+    &__texts__text {
       display: none;
 
       &:first-child,
