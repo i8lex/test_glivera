@@ -110,50 +110,34 @@ function renderSection() {
 
         const paginatedData = arrData.slice(start, end);
 
-        paginatedData.forEach((user) => renderUser(user))
+        paginatedData.forEach(renderUser)
 
-        function renderUser(user) {
+        function renderUser({ name, company, phone, email, country, status}) {
             const userList = document.createElement(`ul`);
             userList.className = `section__texts`
+
+            let statusClass = ``;
+            let statusText = ``;
+
+            if(status === true) {
+                 statusClass = `section__status__active`;
+                 statusText = `Active`;
+            }
+            if(status !== true) {
+                 statusClass = `section__status__inactive`;
+                 statusText = `Inactive`;
+            }
+
+            userList.innerHTML = `
+                <li class="section__texts__text">${name}</li>
+                <li class="section__texts__text">${company}</li>
+                <li class="section__texts__text">${phone}</li>
+                <li class="section__texts__text">${email}</li>
+                <li class="section__texts__text">${country}</li>
+                <li class="${statusClass}">${statusText}</li>
+            `
+
             sectionWrapper.append(userList);
-
-            const name = document.createElement(`li`);
-            name.className = `section__texts__text`;
-            name.innerText = user.name;
-            userList.append(name);
-
-            const company = document.createElement(`li`);
-            company.className = `section__texts__text`;
-            company.innerText = user.company;
-            userList.append(company);
-
-            const phone = document.createElement(`li`);
-            phone.className = `section__texts__text`;
-            phone.innerText = user.phone;
-            userList.append(phone);
-
-            const email = document.createElement(`li`);
-            email.className = `section__texts__text`;
-            email.innerText = user.email;
-            userList.append(email);
-
-            const country = document.createElement(`li`);
-            country.className = `section__texts__text`;
-            country.innerText = user.country;
-            userList.append(country);
-
-            if(user.status === true) {
-                const statusActive = document.createElement(`li`);
-                statusActive.className = `section__status__active`;
-                statusActive.innerText = `Active`;
-                userList.append(statusActive);
-            }
-            if(user.status !== true) {
-                const statusInactive = document.createElement(`li`);
-                statusInactive.className = `section__status__inactive`;
-                statusInactive.innerText = `Inactive`;
-                userList.append(statusInactive);
-            }
         }
     }
 
@@ -182,12 +166,14 @@ function renderSection() {
         ulEl.prepend(liLeft);
         ulEl.append(liRight);
 
-        // liRight.addEventListener(`click`, () => {
-        //     currentPage = currentPage + 1;
-        //     liEl.classList.add('footer__page__active')
-        //     renderData(arrData, rows, currentPage);
-        // })
-
+        liRight.addEventListener(`click`, () => {
+            currentPage = currentPage + 1;
+            renderData(arrData, rows, currentPage);
+        })
+        liLeft.addEventListener(`click`, () => {
+            currentPage = currentPage - 1;
+            renderData(arrData, rows, currentPage);
+        })
 
 
         function displayPaginationBtn(page) {
