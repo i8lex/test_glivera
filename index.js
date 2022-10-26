@@ -167,13 +167,34 @@ function renderSection() {
         ulEl.append(liRight);
 
         liRight.addEventListener(`click`, () => {
+            let currentItemLi = document.querySelector('li.footer__page__active');
+            currentItemLi.classList.remove('footer__page__active');
+            currentItemLi.nextElementSibling.classList.add('footer__page__active');
             currentPage = currentPage + 1;
+            if(pagesCount === currentPage) {
+                liRight.classList.add(`hidden`)
+            }
+            if(currentPage !== 1) {
+                liLeft.classList.remove(`hidden`)
+            }
             renderData(arrData, rows, currentPage);
         })
+
         liLeft.addEventListener(`click`, () => {
+            let currentItemLi = document.querySelector('li.footer__page__active');
+            currentItemLi.classList.remove('footer__page__active');
+            currentItemLi.previousElementSibling.classList.add('footer__page__active');
             currentPage = currentPage - 1;
+            if(currentPage === 1) {
+                liLeft.classList.add(`hidden`)
+            }
+            if(pagesCount !== currentPage) {
+                liRight.classList.remove(`hidden`)
+            }
             renderData(arrData, rows, currentPage);
+
         })
+
 
 
         function displayPaginationBtn(page) {
