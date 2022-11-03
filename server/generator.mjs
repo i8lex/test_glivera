@@ -43,8 +43,12 @@ function createUsers() {
 function User(name, company, countryCode, country, status) {
     this.name = name;
     this.company = company;
-    this.phone = `(${countryCode}) ${randomizer(0, 9)}${randomizer(0, 9)}${randomizer(0, 9)}-${randomizer(0, 9)}${randomizer(0, 9)}${randomizer(0, 9)}${randomizer(0, 9)}`;
-    this.email = `${name.toLowerCase().replace(/\s/g,``)}@${company.toLowerCase().replace(/\s/g,``)}.com`;
+    this.phone = `(${countryCode}) ${randomizer(0, 9)}${randomizer
+        (0, 9)}${randomizer(0, 9)}-${randomizer(0, 9)}${randomizer
+        (0, 9)}${randomizer(0, 9)}${randomizer(0, 9)}`;
+    this.email = `${name.toLowerCase()
+        .replace(/\s/g,`.`)}@${company.toLowerCase()
+        .split(` `)[0]}.com`;    // .replace(/\s/g,`.`)
     this.country = country;
     this.status = status;
 
@@ -58,14 +62,6 @@ for (let i = 0; i < 100; i++) {
 console.log(users)
 
 
-
-// async function getData() {
-//     const response = await fetch('http://localhost:4020');
-//     const data = await response.json();
-//     return data;
-// }
-
-// const data = await getData();
 
 
 

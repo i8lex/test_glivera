@@ -200,7 +200,7 @@ table {
   max-width: 215px;
   flex: 1 1;
   position: relative;
-  word-break: break-all;
+  hyphens: auto;
   overflow: hidden;
   padding: 25px 0;
   font-style: normal;
