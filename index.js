@@ -1,5 +1,12 @@
 
-import {data} from "./list.js";
+// import {data} from "./list.js";
+
+async function getData() {
+    const response = await fetch('http://localhost:4020');
+    const data = await response.json();
+    return data;
+}
+
 
 const body = document.querySelector (`body`);
 body.innerHTML = `
@@ -41,7 +48,8 @@ body.innerHTML = `
 
 const sectionWrapper = document.querySelector(`.section__wrapper`);
 
-function renderSection() {
+async function renderSection() {
+    const data = await getData();
     let currentPage = 1;
     let rows = 8;
     let newData = [];
@@ -160,7 +168,7 @@ function renderSection() {
         liRight.className = `footer__page right`;
         liRight.innerText = `>`;
         const liLeft = document.createElement(`li`);
-        liLeft.className = `footer__page left`;
+        liLeft.className = `footer__page left hidden`;
         liLeft.innerText = `<`;
 
         ulEl.prepend(liLeft);
@@ -205,12 +213,26 @@ function renderSection() {
             if (currentPage === page) liEl.classList.add('footer__page__active');
 
             liEl.addEventListener('click', () => {
+
                 currentPage = page
                 renderData(arrData, rows, currentPage)
 
                 let currentItemLi = document.querySelector('li.footer__page__active');
                 currentItemLi.classList.remove('footer__page__active');
                 liEl.classList.add('footer__page__active');
+
+                if(pagesCount === currentPage) {
+                    liRight.classList.add(`hidden`)
+                }
+                if(currentPage !== 1) {
+                    liLeft.classList.remove(`hidden`)
+                }
+                if(currentPage === 1) {
+                    liLeft.classList.add(`hidden`)
+                }
+                if(pagesCount !== currentPage) {
+                    liRight.classList.remove(`hidden`)
+                }
             })
             return liEl;
         }
@@ -238,7 +260,7 @@ function renderSection() {
     displayPagination(data, rows);
 }
 
-renderSection();
+await renderSection();
 
 
 
