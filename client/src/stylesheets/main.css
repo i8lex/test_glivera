@@ -287,12 +287,10 @@
     align-items: flex-start;
     justify-content: flex-start;
   }
-
   .container {
     max-width: 375px;
     padding: 0 7px;
   }
-
   .section {
     max-width: 375px;
   }
@@ -314,7 +312,6 @@
   .section__columns {
     grid-template-columns: 2fr 1fr 1fr;
   }
-
   .footer__wrapper {
     flex-direction: column;
   }

@@ -13,23 +13,19 @@ server.register(cors, {
     origin: true,
 })
 
-// server.register(static, {
-//
-// })
-
-
 server.get(`/`, (request, reply) => {
-   return reply.sendFile(``).send(users)
+   return reply.send(users)
 });
 
 server.get(`/active`, (request, reply) => {
 
     let newData = [];
-    return reply.send(users.filter((item) => {
+        newData = users.filter((item) => {
         if(item.status === true) {
             return newData.push(item);
         }
-    }))
+    });
+    return reply.send(newData)
 });
 
 
