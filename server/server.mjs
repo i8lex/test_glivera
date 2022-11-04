@@ -1,8 +1,9 @@
 import fastify from "fastify";
 import { users } from "./generator.mjs"
 import cors from "@fastify/cors"
+// import static from "@fastify/static"
 
-// const { users } = pkg;
+
 
 const server = fastify({
     logger: true,
@@ -12,9 +13,13 @@ server.register(cors, {
     origin: true,
 })
 
+// server.register(static, {
+//
+// })
+
 
 server.get(`/`, (request, reply) => {
-   return reply.send(users)
+   return reply.sendFile(``).send(users)
 });
 
 server.get(`/active`, (request, reply) => {

@@ -1,8 +1,14 @@
 
 // import {data} from "./list.js";
 
-async function getData() {
+async function getUsers() {
     const response = await fetch('http://localhost:4020');
+    const data = await response.json();
+    return data;
+}
+
+async function getActiveUsers() {
+    const response = await fetch('http://localhost/active:4020');
     const data = await response.json();
     return data;
 }
@@ -14,7 +20,7 @@ body.innerHTML = `
     <div class="header__wrapper">
         <div class="header__container">
             <h1 class="header__title">All Customers</h1>
-            <p class="header__link">Active Members</p>
+            <a href="#" class="header__link">Active Members</a>
         </div>
             <form action="#" class="header__form">
                     <button type="button"  class="header__search__label__icon">
@@ -49,7 +55,7 @@ body.innerHTML = `
 const sectionWrapper = document.querySelector(`.section__wrapper`);
 
 async function renderSection() {
-    const data = await getData();
+    const data = await getUsers();
     let currentPage = 1;
     let rows = 8;
     let newData = [];
@@ -80,19 +86,13 @@ async function renderSection() {
 
     const active = document.querySelector(`.header__link`);
     active.addEventListener(`click`, () => {
-
-        fetch(`http://localhost/active:4020`)
-            .then((response) =>{
-                return response.json();
-            }).then((data) => {
-                console.log(data)
-        })
+        const data = getActiveUsers();
 
         cleanData();
         cleanPaginator();
 
-
-
+        renderData(data, rows, currentPage);
+        displayPagination(data, rows)
         // data.filter((item) => {
         //     if(item.status === true) {
         //         return newData.push(item);
