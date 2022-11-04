@@ -18,7 +18,6 @@
 *.iml
 out
 gen
-.gitignore
 .idea/
 assets/search 2.svg
 assets/search.svg
@@ -27,6 +26,5 @@ index_grid_done.html
 index — grid.html
 index — grid2.html
 node_modules/
-package-lock.json
-package.json
-stylesheets/
+
+
