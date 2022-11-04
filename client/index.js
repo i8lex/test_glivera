@@ -45,50 +45,65 @@ async function getUsers() {
     console.log(data)
     return data;
 }
-async function getActiveUsers() {
-    const response = await fetch('http://localhost:4020/active');
-    const data = await response.json();
-    console.log(data)
-    return data;
-}
 
 const data = await getUsers();
-const activeUserData = await getActiveUsers();
 let currentPage = 1;
 let rows = 8;
-let newData = [];
 const sectionWrapper = document.querySelector(`.section__wrapper`);
 const active = document.querySelector(`.header__link`);
 const form = document.querySelector(`form`);
 
-form.addEventListener(`keyup`, event => {
-    cleanData();
-    cleanPaginator();
-    event.preventDefault();
-
-    const value = document.querySelector(`input`).value;
-    data.filter((item) => {
-        if(
-            item.name.toLowerCase().includes(value.toLowerCase()) ||
-            item.company.toLowerCase().includes(value.toLowerCase()) ||
-            item.phone.toLowerCase().includes(value.toLowerCase()) ||
-            item.email.toLowerCase().includes(value.toLowerCase()) ||
-            item.country.toLowerCase().includes(value.toLowerCase())) {
-            return newData.push(item);
-        }
-    })
-    renderData(newData, rows, currentPage);
-    displayPagination(newData, rows);
-    newData = [];
-});
-
-active.addEventListener(`click`, () => {
-    form.addEventListener(`keyup`, event => {
+form.addEventListener(`input`, async event => {
         cleanData();
         cleanPaginator();
         event.preventDefault();
 
-        const value = document.querySelector(`input`).value;
+        const value = document.querySelector(`input`).value.toString();
+
+        const url = new URL(`http://localhost:4020/`);
+        // const { value } = input;
+        url.searchParams.append(`search`, value);
+    console.log(value)
+
+        cleanData();
+        cleanPaginator();
+        event.preventDefault();
+        const response = fetch(url.href);
+        const searchData = await response.json();
+        // data.filter((item) => {
+        //     if(
+        //         item.name.toLowerCase().includes(value.toLowerCase()) ||
+        //         item.company.toLowerCase().includes(value.toLowerCase()) ||
+        //         item.phone.toLowerCase().includes(value.toLowerCase()) ||
+        //         item.email.toLowerCase().includes(value.toLowerCase()) ||
+        //         item.country.toLowerCase().includes(value.toLowerCase())) {
+        //         return newData.push(item);
+        //     }
+        // })
+        renderData(searchData, rows, currentPage);
+        displayPagination(searchData, rows);
+        // newData = [];
+    });
+
+
+
+active.addEventListener(`click`, async () => {
+    let newData = [];
+
+    async function getActiveUsers() {
+        const response = await fetch('http://localhost:4020/active');
+        const data = await response.json();
+        console.log(data)
+        return data;
+    }
+    const activeUserData = await getActiveUsers();
+
+    form.addEventListener(`keyup`, async event => {
+        cleanData();
+        cleanPaginator();
+        event.preventDefault();
+
+        const value = document.querySelector(`input`).value.toString();
         activeUserData.filter((item) => {
             if(
                 item.name.toLowerCase().includes(value.toLowerCase()) ||
@@ -103,6 +118,8 @@ active.addEventListener(`click`, () => {
         displayPagination(newData, rows);
         newData = [];
     });
+
+
     cleanData();
     cleanPaginator();
     // data.filter((item) => {
