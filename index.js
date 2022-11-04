@@ -80,17 +80,27 @@ async function renderSection() {
 
     const active = document.querySelector(`.header__link`);
     active.addEventListener(`click`, () => {
+
+        fetch(`http://localhost/active:4020`)
+            .then((response) =>{
+                return response.json();
+            }).then((data) => {
+                console.log(data)
+        })
+
         cleanData();
         cleanPaginator();
 
-        data.filter((item) => {
-            if(item.status === true) {
-                return newData.push(item);
-            }
-        })
-        renderData(newData, rows, currentPage);
-        displayPagination(newData, rows);
-        newData = [];
+
+
+        // data.filter((item) => {
+        //     if(item.status === true) {
+        //         return newData.push(item);
+        //     }
+        // })
+        // renderData(newData, rows, currentPage);
+        // displayPagination(newData, rows);
+        // newData = [];
     });
 
 
