@@ -41,12 +41,9 @@ import { cleanPaginator } from "./src/cleaner.js";
 
 async function getUsers() {
     const response = await fetch('http://localhost:4020');
-    const data = await response.json();
-    console.log(data)
-    return data;
+    return await response.json();
 }
 
-const data = await getUsers();
 let currentPage = 1;
 let rows = 8;
 const sectionWrapper = document.querySelector(`.section__wrapper`);
@@ -58,31 +55,17 @@ form.addEventListener(`input`, async event => {
         cleanPaginator();
         event.preventDefault();
 
+    async function getSearchedUsers() {
         const value = document.querySelector(`input`).value.toString();
-
-        const url = new URL(`http://localhost:4020/`);
-        // const { value } = input;
+        const url = new URL(`http://localhost:4020/users`);
         url.searchParams.append(`search`, value);
-    console.log(value)
+        const response = await fetch(url.href);
+        return await response.json();
+    }
 
-        cleanData();
-        cleanPaginator();
-        event.preventDefault();
-        const response = fetch(url.href);
-        const searchData = await response.json();
-        // data.filter((item) => {
-        //     if(
-        //         item.name.toLowerCase().includes(value.toLowerCase()) ||
-        //         item.company.toLowerCase().includes(value.toLowerCase()) ||
-        //         item.phone.toLowerCase().includes(value.toLowerCase()) ||
-        //         item.email.toLowerCase().includes(value.toLowerCase()) ||
-        //         item.country.toLowerCase().includes(value.toLowerCase())) {
-        //         return newData.push(item);
-        //     }
-        // })
+        const searchData = await getSearchedUsers();
         renderData(searchData, rows, currentPage);
         displayPagination(searchData, rows);
-        // newData = [];
     });
 
 
@@ -114,6 +97,7 @@ active.addEventListener(`click`, async () => {
                 return newData.push(item);
             }
         })
+
         renderData(newData, rows, currentPage);
         displayPagination(newData, rows);
         newData = [];
@@ -214,7 +198,7 @@ function displayPagination(arrData, rowPerPage) {
         currentItemLi.classList.remove('footer__page__active');
         currentItemLi.nextElementSibling.classList.add('footer__page__active');
         currentPage = currentPage + 1;
-        if(pagesCount === currentPage) {
+        if(pagesCount === currentPage || pagesCount === 1) {
             liRight.classList.add(`hidden`)
         }
         if(currentPage !== 1) {
@@ -271,6 +255,8 @@ function displayPagination(arrData, rowPerPage) {
 }
 
 async function renderSection() {
+    const data = await getUsers();
+
     cleanData();
     renderData(data, rows, currentPage);
     displayPagination(data, rows);
