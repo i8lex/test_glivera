@@ -39,12 +39,20 @@ import { cleanPaginator } from "./src/cleaner.js";
 // </footer>
 // `
 
+async function getCurrentPage() {
+    const response = await fetch('http://localhost:4030');
+    return await response.json();
+}
+
 async function getUsers() {
     const response = await fetch('http://localhost:4020');
     return await response.json();
 }
+let currentPage = +location.pathname.replace(/[^+\d]/g, ``);
+history.pushState({}, `page/${currentPage}`, currentPage);
 
-let currentPage = 1;
+// const pageRoute = location.pathname
+// console.log()
 let rows = 8;
 const sectionWrapper = document.querySelector(`.section__wrapper`);
 const active = document.querySelector(`.header__link`);
@@ -60,8 +68,8 @@ form.addEventListener(`input`, async event => {
         const value = document.querySelector(`input`).value.toString();
         // history.pushState({}, `bla`,`users/${value.toString()}` )
         const url = new URL(`http://localhost:4020/users`);
-        url.searchParams.append(`search`, value);
-        const response = await fetch(url.href);
+        // url.searchParams.append(`search`, value);
+        // const response = await fetch(url.href);
         return await response.json();
     }
 
@@ -200,6 +208,7 @@ function displayPagination(arrData, rowPerPage) {
         currentItemLi.classList.remove('footer__page__active');
         currentItemLi.nextElementSibling.classList.add('footer__page__active');
         currentPage = currentPage + 1;
+        history.pushState({}, `bla`, currentPage);
         if(pagesCount === currentPage || pagesCount === 1) {
             liRight.classList.add(`hidden`)
         }
@@ -214,6 +223,7 @@ function displayPagination(arrData, rowPerPage) {
         currentItemLi.classList.remove('footer__page__active');
         currentItemLi.previousElementSibling.classList.add('footer__page__active');
         currentPage = currentPage - 1;
+        history.pushState({}, `bla`, currentPage);
         if(currentPage === 1) {
             liLeft.classList.add(`hidden`)
         }
@@ -231,10 +241,10 @@ function displayPagination(arrData, rowPerPage) {
         if (currentPage === page) liEl.classList.add('footer__page__active');
 
         liEl.addEventListener('click', () => {
-
-            currentPage = page
-            renderData(arrData, rows, currentPage)
-
+            // let pageRoute = page
+            currentPage = page;
+            renderData(arrData, rows, currentPage);
+            history.pushState({}, `bla`, page);
             let currentItemLi = document.querySelector('li.footer__page__active');
             currentItemLi.classList.remove('footer__page__active');
             liEl.classList.add('footer__page__active');

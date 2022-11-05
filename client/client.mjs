@@ -14,8 +14,15 @@ server.register(fastifyStatic, {
     prefix: '/', // optional: default '/'
 })
 
-server.get('/active', function (req, reply) {
-    reply.sendFile('index.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+server.get('/', function (req, reply) {
+    reply.send('index.html')
+
+})
+
+server.get('/page/:id', function (req, reply) {
+    // const { id = 1 } = request.params
+    reply.sendFile('index.html')
+        // .send(id) // serving path.join(__dirname, 'public', 'myHtml.html') directly
 })
 
 server.listen({
