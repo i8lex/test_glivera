@@ -45,7 +45,6 @@ async function getUsers() {
 }
 let currentPage = +location.pathname.replace(/[^+\d]/g, ``);
 history.pushState({}, `page/${currentPage}`, currentPage);
-
 // const pageRoute = location.pathname
 // console.log()
 let rows = 8;
@@ -61,10 +60,10 @@ form.addEventListener(`input`, async event => {
     async function getSearchedUsers() {
 
         const value = document.querySelector(`input`).value.toString();
-        // history.pushState({}, `bla`,`users/${value.toString()}` )
+        history.pushState({}, `bla`,`search#${value.toString()}=` )
         const url = new URL(`http://localhost:4020/users`);
-        // url.searchParams.append(`search`, value);
-        // const response = await fetch(url.href);
+        url.searchParams.append(`search`, value);
+        const response = await fetch(url.href);
         return await response.json();
     }
 
