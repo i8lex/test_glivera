@@ -39,11 +39,6 @@ import { cleanPaginator } from "./src/cleaner.js";
 // </footer>
 // `
 
-async function getCurrentPage() {
-    const response = await fetch('http://localhost:4030');
-    return await response.json();
-}
-
 async function getUsers() {
     const response = await fetch('http://localhost:4020');
     return await response.json();
