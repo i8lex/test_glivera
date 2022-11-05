@@ -41,54 +41,55 @@ import { cleanPaginator } from "./src/cleaner.js";
 
 async function getUsers() {
     const response = await fetch('http://localhost:4020');
-    const data = await response.json();
-    console.log(data)
-    return data;
-}
-async function getActiveUsers() {
-    const response = await fetch('http://localhost:4020/active');
-    const data = await response.json();
-    console.log(data)
-    return data;
+    return await response.json();
 }
 
-const data = await getUsers();
-const activeUserData = await getActiveUsers();
 let currentPage = 1;
 let rows = 8;
-let newData = [];
 const sectionWrapper = document.querySelector(`.section__wrapper`);
 const active = document.querySelector(`.header__link`);
 const form = document.querySelector(`form`);
 
-form.addEventListener(`keyup`, event => {
-    cleanData();
-    cleanPaginator();
-    event.preventDefault();
-
-    const value = document.querySelector(`input`).value;
-    data.filter((item) => {
-        if(
-            item.name.toLowerCase().includes(value.toLowerCase()) ||
-            item.company.toLowerCase().includes(value.toLowerCase()) ||
-            item.phone.toLowerCase().includes(value.toLowerCase()) ||
-            item.email.toLowerCase().includes(value.toLowerCase()) ||
-            item.country.toLowerCase().includes(value.toLowerCase())) {
-            return newData.push(item);
-        }
-    })
-    renderData(newData, rows, currentPage);
-    displayPagination(newData, rows);
-    newData = [];
-});
-
-active.addEventListener(`click`, () => {
-    form.addEventListener(`keyup`, event => {
+form.addEventListener(`input`, async event => {
         cleanData();
         cleanPaginator();
         event.preventDefault();
 
-        const value = document.querySelector(`input`).value;
+    async function getSearchedUsers() {
+
+        const value = document.querySelector(`input`).value.toString();
+        // history.pushState({}, `bla`,`users/${value.toString()}` )
+        const url = new URL(`http://localhost:4020/users`);
+        url.searchParams.append(`search`, value);
+        const response = await fetch(url.href);
+        return await response.json();
+    }
+
+        const searchData = await getSearchedUsers();
+        renderData(searchData, rows, currentPage);
+        displayPagination(searchData, rows);
+    });
+
+
+
+active.addEventListener(`click`, async () => {
+    let newData = [];
+
+    async function getActiveUsers() {
+        const response = await fetch('http://localhost:4020/active');
+        const data = await response.json();
+        console.log(data)
+        return data;
+    }
+    const activeUserData = await getActiveUsers();
+    history.pushState({}, `bla`,`active` )
+
+    form.addEventListener(`keyup`, async event => {
+        cleanData();
+        cleanPaginator();
+        event.preventDefault();
+
+        const value = document.querySelector(`input`).value.toString();
         activeUserData.filter((item) => {
             if(
                 item.name.toLowerCase().includes(value.toLowerCase()) ||
@@ -103,6 +104,8 @@ active.addEventListener(`click`, () => {
         displayPagination(newData, rows);
         newData = [];
     });
+
+
     cleanData();
     cleanPaginator();
     // data.filter((item) => {
@@ -197,7 +200,7 @@ function displayPagination(arrData, rowPerPage) {
         currentItemLi.classList.remove('footer__page__active');
         currentItemLi.nextElementSibling.classList.add('footer__page__active');
         currentPage = currentPage + 1;
-        if(pagesCount === currentPage) {
+        if(pagesCount === currentPage || pagesCount === 1) {
             liRight.classList.add(`hidden`)
         }
         if(currentPage !== 1) {
@@ -254,6 +257,8 @@ function displayPagination(arrData, rowPerPage) {
 }
 
 async function renderSection() {
+    const data = await getUsers();
+
     cleanData();
     renderData(data, rows, currentPage);
     displayPagination(data, rows);
