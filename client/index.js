@@ -56,7 +56,9 @@ form.addEventListener(`input`, async event => {
         event.preventDefault();
 
     async function getSearchedUsers() {
+
         const value = document.querySelector(`input`).value.toString();
+        // history.pushState({}, `bla`,`users/${value.toString()}` )
         const url = new URL(`http://localhost:4020/users`);
         url.searchParams.append(`search`, value);
         const response = await fetch(url.href);
@@ -80,6 +82,7 @@ active.addEventListener(`click`, async () => {
         return data;
     }
     const activeUserData = await getActiveUsers();
+    history.pushState({}, `bla`,`active` )
 
     form.addEventListener(`keyup`, async event => {
         cleanData();
@@ -97,7 +100,6 @@ active.addEventListener(`click`, async () => {
                 return newData.push(item);
             }
         })
-
         renderData(newData, rows, currentPage);
         displayPagination(newData, rows);
         newData = [];
