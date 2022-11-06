@@ -44,6 +44,8 @@ async function getUsers() {
     return await response.json();
 }
 let currentPage = +location.pathname.replace(/[^+\d]/g, ``);
+
+
 history.pushState({}, `page/${currentPage}`, currentPage);
 // const pageRoute = location.pathname
 // console.log()
@@ -61,7 +63,7 @@ form.addEventListener(`input`, async event => {
 
         const value = document.querySelector(`input`).value.toString();
         history.pushState({}, `bla`,`search#${value.toString()}=` )
-        const url = new URL(`http://localhost:4020/users`);
+        const url = new URL(`http://localhost:4020/pages`);
         url.searchParams.append(`search`, value);
         const response = await fetch(url.href);
         return await response.json();
