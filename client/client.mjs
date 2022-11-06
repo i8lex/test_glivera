@@ -1,4 +1,4 @@
-import fastify from 'fastify';
+import Fastify from 'fastify';
 // import  addHook  from 'fastify'
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -6,44 +6,46 @@ import fastifyStatic from '@fastify/static';
 
 
 
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const server = fastify({
+const server = Fastify({
     logger: true,
 });
 
-server.addHook('onError', (request, reply, error, done) => {
-     reply.redirect(303, 'http://localhost:4030/page/1')
-    done()
-})
+// server.addHook('onError', (request, reply, error, done) => {
+//      reply.redirect(303, 'http://localhost:4030/page/1')
+//     done()
+// })
 
 server.register(fastifyStatic, {
     root: join(__dirname, '/'),
     prefix: '/', // optional: default '/'
 })
 
-server.get('/?', function (req, reply) {
-    return reply.redirect(303, 'http://localhost:4030/page/1')
+// server.setErrorHandler(function (error, request, reply) {
+//     const { statusCode } = error.statusCode
+//     if (statusCode >= 500) {
+//         this.log.error(error)
+//     } else if (statusCode >= 400) {
+//         this.log.info(error)
+//     } else {
+//         this.log.error(error)
+//     }
+//     reply.redirect(303, 'http://localhost:4030/page/1')
+// })
 
+server.setNotFoundHandler(function (request, reply) {
+    return reply.redirect(303, '/page/1')// Default not found handler with preValidation and preHandler hooks
 })
 
-server.setErrorHandler(function (error, request, reply) {
-    if (error instanceof Fastify.errorCodes.FST_ERR_BAD_STATUS_CODE) {
-        // Log error
-        this.log.error(error)
-        // Send error response
-        return reply.redirect(303, 'http://localhost:4030/page/1')
-    }
-})
 
 server.get('/page/:id', function (req, reply) {
     // const { id = 1 } = request.params
-    reply.sendFile('index.html')
-        // .send(id) // serving path.join(__dirname, 'public', 'myHtml.html') directly
+    return reply.sendFile('index.html')
 })
 
 server.listen({
     port: 4030,
     host: `0.0.0.0`,
-
 });
