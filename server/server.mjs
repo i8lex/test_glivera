@@ -35,6 +35,18 @@ server.get(`/page/:id`, (request, reply) => {
         user.country.toLowerCase().includes(search.toLowerCase())))
 });
 
+server.get(`/active/page/:id`, (request, reply) => {
+    const { query: { search }} = request;
+
+    reply.send(users.filter((item) => item.status === true)
+        .filter((user) =>
+        user.name.toLowerCase().includes(search.toLowerCase()) ||
+        user.company.toLowerCase().includes(search.toLowerCase()) ||
+        user.phone.toLowerCase().includes(search.toLowerCase()) ||
+        user.email.toLowerCase().includes(search.toLowerCase()) ||
+        user.country.toLowerCase().includes(search.toLowerCase())))
+});
+
 
 
 server.listen({

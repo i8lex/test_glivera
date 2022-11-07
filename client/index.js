@@ -59,76 +59,15 @@ function getCurrentPage() {
     // return currentPage
 }
 
-// async function getActiveUsers() {
-//     const activeUsers = document.querySelector(`.header__link`);
-//
-//     activeUsers.addEventListener(`click`, async () => {
-//         // let newData = [];
-//         // history.pushState({}, `active/page/`,`` )
-//         // history.pushState({}, `active/page/`,`active/page/${currentPage}` )
-//
-//         // async function getActiveUsers() {
-//         //     const response = await fetch('http://localhost:4020/active');
-//         //     const data = await response.json();
-//         //     console.log(data)
-//         //     return data;
-//         // }
-//         // const activeUserData = await getActiveUsers();
-//
-//
-//         // form.addEventListener(`keyup`, async event => {
-//         //     cleanData();
-//         //     cleanPaginator();
-//         //     event.preventDefault();
-//         //
-//         //     const value = document.querySelector(`input`).value.toString();
-//         //     activeUserData.filter((item) => {
-//         //         if(
-//         //             item.name.toLowerCase().includes(value.toLowerCase()) ||
-//         //             item.company.toLowerCase().includes(value.toLowerCase()) ||
-//         //             item.phone.toLowerCase().includes(value.toLowerCase()) ||
-//         //             item.email.toLowerCase().includes(value.toLowerCase()) ||
-//         //             item.country.toLowerCase().includes(value.toLowerCase())) {
-//         //             return newData.push(item);
-//         //         }
-//         //     })
-//         //     renderData(newData, rows, currentPage);
-//         //     displayPagination(newData, rows);
-//         //     newData = [];
-//         // });
-//
-//
-//         // cleanData();
-//         // cleanPaginator();
-//         // // renderData(activeUserData, rows, currentPage);
-//         // displayPagination(activeUserData, rows);
-//
-//
-//         // newData = [];
-//     });
-// }
-// await getActiveUsers()
-
 async function getUsers() {
-
-
 
     if(+location.pathname.includes(`active`)) {
         const response = await fetch('http://localhost:4020/active');
          return await response.json();
-
-        // let currentPage = +location.pathname.replace(/active|\/|page/gi, ``);
-        // console.log(location.pathname.replace(/active|\/|page/gi, ``));
-        // console.log(location.pathname);
-
-        // history.pushState({}, `active/page/${currentPage}`, `${currentPage}`);
-        // console.log(response.json())
-        // return await response.json()
     }
 
      if(+location.pathname.includes(`page`)) {
         const response = await fetch('http://localhost:4020');
-        // console.log(response.headers.get('page'));
         let currentPage = +location.pathname.replace(/page|\//gi, ``);
         history.pushState({}, `page/${currentPage}`, currentPage);
         return await response.json()
@@ -141,24 +80,6 @@ async function getUsers() {
     // }
 
 }
-const data = await getUsers();
-console.log(data)
-
-await renderSection();
-
-
-
-
-// console.log(location.pathname.replace(/serverHost|page|\//gi, ``));
-
-// console.log((+location.pathname.includes(`active`)))
-
-// history.pushState({}, `page/${currentPage}`, currentPage);
-
-
-
-
-
 
 form.addEventListener(`input`, async event => {
         cleanData();
@@ -166,22 +87,28 @@ form.addEventListener(`input`, async event => {
         event.preventDefault();
 
     async function getSearchedUsers() {
-
-        const value = document.querySelector(`input`).value.toString();
-        history.pushState({}, `bla`,`search#${value.toString()}=` )
-        const url = new URL(`http://localhost:4020/page/`);
-        url.searchParams.append(`search`, value);
-        const response = await fetch(url.href);
-        return await response.json();
+        if(+location.pathname.includes(`active`)) {
+            const value = document.querySelector(`input`).value.toString();
+            history.pushState({}, `bla`, `search#${value.toString()}=`)
+            const url = new URL(`http://localhost:4020/active/page/`);
+            url.searchParams.append(`search`, value);
+            const response = await fetch(url.href);
+            return await response.json();
+        }
+        if(+location.pathname.includes(`page`)) {
+            const value = document.querySelector(`input`).value.toString();
+            history.pushState({}, `bla`, `search#${value.toString()}=`)
+            const url = new URL(`http://localhost:4020/page/`);
+            url.searchParams.append(`search`, value);
+            const response = await fetch(url.href);
+            return await response.json();
+        }
     }
 
         const searchData = await getSearchedUsers();
         renderData(searchData, rows, currentPage);
         displayPagination(searchData, rows);
     });
-
-
-
 
 function renderUser({ name, company, phone, email, country, status }) {
     const userList = document.createElement(`ul`);
@@ -330,7 +257,8 @@ function displayPagination(arrData, rowPerPage) {
 }
 
 async function renderSection() {
-
+    const data = await getUsers();
+    console.log(data)
 
 console.log(data)
     cleanData();
@@ -338,6 +266,7 @@ console.log(data)
     displayPagination(data, rows);
 }
 
+await renderSection();
 
 
 
