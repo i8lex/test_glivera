@@ -45,6 +45,11 @@ server.get('/page/:id', function (req, reply) {
     return reply.sendFile('index.html')
 })
 
+server.get('/active/page/:id', function (req, reply) {
+    // const { id = 1 } = request.params
+    return reply.sendFile('index.html')
+})
+
 server.listen({
     port: 4030,
     host: `0.0.0.0`,

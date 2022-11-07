@@ -39,20 +39,126 @@ import { cleanPaginator } from "./src/cleaner.js";
 // </footer>
 // `
 
-async function getUsers() {
-    const response = await fetch('http://localhost:4020');
-    return await response.json();
-}
-let currentPage = +location.pathname.replace(/[^+\d]/g, ``);
 
+let currentPage = getCurrentPage()
+// console.log(currentPage);
 
-history.pushState({}, `page/${currentPage}`, currentPage);
-// const pageRoute = location.pathname
-// console.log()
 let rows = 8;
 const sectionWrapper = document.querySelector(`.section__wrapper`);
-const active = document.querySelector(`.header__link`);
 const form = document.querySelector(`form`);
+
+function getCurrentPage() {
+    if(+location.pathname.includes(`active`)) {
+        let currentPage = +location.pathname.replace(/active|\/|page/gi, ``);
+        return currentPage
+    }
+    if(+location.pathname.includes(`page`)) {
+        let currentPage = +location.pathname.replace(/serverHost|page|\//gi, ``);
+        return currentPage
+    }
+    // return currentPage
+}
+
+// async function getActiveUsers() {
+//     const activeUsers = document.querySelector(`.header__link`);
+//
+//     activeUsers.addEventListener(`click`, async () => {
+//         // let newData = [];
+//         // history.pushState({}, `active/page/`,`` )
+//         // history.pushState({}, `active/page/`,`active/page/${currentPage}` )
+//
+//         // async function getActiveUsers() {
+//         //     const response = await fetch('http://localhost:4020/active');
+//         //     const data = await response.json();
+//         //     console.log(data)
+//         //     return data;
+//         // }
+//         // const activeUserData = await getActiveUsers();
+//
+//
+//         // form.addEventListener(`keyup`, async event => {
+//         //     cleanData();
+//         //     cleanPaginator();
+//         //     event.preventDefault();
+//         //
+//         //     const value = document.querySelector(`input`).value.toString();
+//         //     activeUserData.filter((item) => {
+//         //         if(
+//         //             item.name.toLowerCase().includes(value.toLowerCase()) ||
+//         //             item.company.toLowerCase().includes(value.toLowerCase()) ||
+//         //             item.phone.toLowerCase().includes(value.toLowerCase()) ||
+//         //             item.email.toLowerCase().includes(value.toLowerCase()) ||
+//         //             item.country.toLowerCase().includes(value.toLowerCase())) {
+//         //             return newData.push(item);
+//         //         }
+//         //     })
+//         //     renderData(newData, rows, currentPage);
+//         //     displayPagination(newData, rows);
+//         //     newData = [];
+//         // });
+//
+//
+//         // cleanData();
+//         // cleanPaginator();
+//         // // renderData(activeUserData, rows, currentPage);
+//         // displayPagination(activeUserData, rows);
+//
+//
+//         // newData = [];
+//     });
+// }
+// await getActiveUsers()
+
+async function getUsers() {
+
+
+
+    if(+location.pathname.includes(`active`)) {
+        const response = await fetch('http://localhost:4020/active');
+         return await response.json();
+
+        // let currentPage = +location.pathname.replace(/active|\/|page/gi, ``);
+        // console.log(location.pathname.replace(/active|\/|page/gi, ``));
+        // console.log(location.pathname);
+
+        // history.pushState({}, `active/page/${currentPage}`, `${currentPage}`);
+        // console.log(response.json())
+        // return await response.json()
+    }
+
+     if(+location.pathname.includes(`page`)) {
+        const response = await fetch('http://localhost:4020');
+        // console.log(response.headers.get('page'));
+        let currentPage = +location.pathname.replace(/page|\//gi, ``);
+        history.pushState({}, `page/${currentPage}`, currentPage);
+        return await response.json()
+    }
+
+    // if(+location.pathname.includes(`search`)) {
+    //     const response = await fetch('http://localhost:4020');
+    //     // console.log(response.headers.get('page'));
+    //     return await response.json()
+    // }
+
+}
+const data = await getUsers();
+console.log(data)
+
+await renderSection();
+
+
+
+
+// console.log(location.pathname.replace(/serverHost|page|\//gi, ``));
+
+// console.log((+location.pathname.includes(`active`)))
+
+// history.pushState({}, `page/${currentPage}`, currentPage);
+
+
+
+
+
 
 form.addEventListener(`input`, async event => {
         cleanData();
@@ -63,7 +169,7 @@ form.addEventListener(`input`, async event => {
 
         const value = document.querySelector(`input`).value.toString();
         history.pushState({}, `bla`,`search#${value.toString()}=` )
-        const url = new URL(`http://localhost:4020/pages`);
+        const url = new URL(`http://localhost:4020/page/`);
         url.searchParams.append(`search`, value);
         const response = await fetch(url.href);
         return await response.json();
@@ -76,51 +182,6 @@ form.addEventListener(`input`, async event => {
 
 
 
-active.addEventListener(`click`, async () => {
-    let newData = [];
-
-    async function getActiveUsers() {
-        const response = await fetch('http://localhost:4020/active');
-        const data = await response.json();
-        console.log(data)
-        return data;
-    }
-    const activeUserData = await getActiveUsers();
-    history.pushState({}, `bla`,`active` )
-
-    form.addEventListener(`keyup`, async event => {
-        cleanData();
-        cleanPaginator();
-        event.preventDefault();
-
-        const value = document.querySelector(`input`).value.toString();
-        activeUserData.filter((item) => {
-            if(
-                item.name.toLowerCase().includes(value.toLowerCase()) ||
-                item.company.toLowerCase().includes(value.toLowerCase()) ||
-                item.phone.toLowerCase().includes(value.toLowerCase()) ||
-                item.email.toLowerCase().includes(value.toLowerCase()) ||
-                item.country.toLowerCase().includes(value.toLowerCase())) {
-                return newData.push(item);
-            }
-        })
-        renderData(newData, rows, currentPage);
-        displayPagination(newData, rows);
-        newData = [];
-    });
-
-
-    cleanData();
-    cleanPaginator();
-    // data.filter((item) => {
-    //     if(item.status === true) {
-    //         return newData.push(item);
-    //     }
-    // })
-    renderData(activeUserData, rows, currentPage);
-    displayPagination(activeUserData, rows);
-    newData = [];
-});
 
 function renderUser({ name, company, phone, email, country, status }) {
     const userList = document.createElement(`ul`);
@@ -240,10 +301,16 @@ function displayPagination(arrData, rowPerPage) {
             // let pageRoute = page
             currentPage = page;
             renderData(arrData, rows, currentPage);
+
+            // console.log(currentPage);
+
             history.pushState({}, `bla`, page);
             let currentItemLi = document.querySelector('li.footer__page__active');
             currentItemLi.classList.remove('footer__page__active');
             liEl.classList.add('footer__page__active');
+
+            console.log(currentItemLi);
+
 
             if(pagesCount === currentPage) {
                 liRight.classList.add(`hidden`)
@@ -263,14 +330,14 @@ function displayPagination(arrData, rowPerPage) {
 }
 
 async function renderSection() {
-    const data = await getUsers();
 
+
+console.log(data)
     cleanData();
     renderData(data, rows, currentPage);
     displayPagination(data, rows);
 }
 
-await renderSection();
 
 
 
