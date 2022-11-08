@@ -39,6 +39,10 @@ server.setNotFoundHandler(function (request, reply) {
     return reply.redirect(303, '/page/1')// Default not found handler with preValidation and preHandler hooks
 })
 
+server.get('/', function (req, reply) {
+    // const { id = 1 } = request.params
+    return reply.redirect(303, '/page/1')// Default not found handler with preValidation and preHandler hooks
+})
 
 server.get('/page/:id', function (req, reply) {
     // const { id = 1 } = request.params

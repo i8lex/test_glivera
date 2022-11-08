@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon client_old.mjs",
     "client": "nodemon client.mjs"
   },
   "keywords": [],
@@ -13,8 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^8.1.1",
+    "@fastify/multipart": "^7.3.0",
     "@fastify/static": "^6.5.0",
-    "fastify": "^4.9.2"
+    "fastify": "^4.9.2",
+    "pg": "^8.8.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20",
